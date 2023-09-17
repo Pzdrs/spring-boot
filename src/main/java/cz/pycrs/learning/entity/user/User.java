@@ -1,6 +1,5 @@
 package cz.pycrs.learning.entity.user;
 
-import cz.pycrs.learning.entity.user.dto.UserDTO;
 import cz.pycrs.learning.payload.request.UserRegistrationRequest;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import java.util.function.Function;
 
 
 @Entity

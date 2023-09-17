@@ -1,13 +1,13 @@
 package cz.pycrs.learning.payload.response;
 
-import cz.pycrs.learning.entity.user.dto.UserDTO;
+import cz.pycrs.learning.entity.user.dto.UserProfile;
 
 public record UserRegistrationResponse(
         boolean success,
         String message,
-        UserDTO user
+        UserProfile user
 ) {
-    public UserRegistrationResponse(boolean success, UserDTO user) {
+    public UserRegistrationResponse(boolean success, UserProfile user) {
         this(success, "User registered successfully", user);
     }
 

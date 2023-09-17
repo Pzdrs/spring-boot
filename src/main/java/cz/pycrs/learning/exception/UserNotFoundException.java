@@ -1,4 +1,4 @@
-package cz.pycrs.learning.entity.user;
+package cz.pycrs.learning.exception;
 
 import cz.pycrs.learning.exception.ItemNotFoundException;
 

@@ -2,8 +2,8 @@ package cz.pycrs.learning.service.impl;
 
 import cz.pycrs.learning.exception.UserRegistrationException;
 import cz.pycrs.learning.entity.user.User;
-import cz.pycrs.learning.entity.user.UserNotFoundException;
-import cz.pycrs.learning.entity.user.dto.UserDTO;
+import cz.pycrs.learning.exception.UserNotFoundException;
+import cz.pycrs.learning.entity.user.dto.UserProfile;
 import cz.pycrs.learning.payload.request.UserRegistrationRequest;
 import cz.pycrs.learning.repository.UserRepository;
 import cz.pycrs.learning.service.UserService;
@@ -23,24 +23,24 @@ public class CommonUserService implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUsers() {
+    public List<UserProfile> getUsers() {
         return repository
                 .findAll()
-                .stream().map(UserDTO::new)
+                .stream().map(UserProfile::new)
                 .toList();
     }
 
     @Override
-    public Optional<UserDTO> getUser(UUID id) {
+    public Optional<UserProfile> getUser(UUID id) {
         return repository
                 .findById(id)
-                .map(UserDTO::new);
+                .map(UserProfile::new);
     }
 
     @Override
     public User registerUser(UserRegistrationRequest registrationRequest) {
         if (repository.existsUserByEmail(registrationRequest.email()))
-            throw new UserRegistrationException("Email already exists");
+            throw new UserRegistrationException("Email address is already taken");
         return repository.save(new User(registrationRequest));
     }
 

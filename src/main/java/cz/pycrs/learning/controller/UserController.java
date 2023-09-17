@@ -1,6 +1,6 @@
 package cz.pycrs.learning.controller;
 
-import cz.pycrs.learning.UserRegistrationException;
+import cz.pycrs.learning.exception.UserRegistrationException;
 import cz.pycrs.learning.entity.user.User;
 import cz.pycrs.learning.entity.user.UserListResponse;
 import cz.pycrs.learning.entity.user.dto.UserDTO;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(new UserListResponse(service.getUsers()));
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserRegistrationResponse> createUser(@RequestBody @Valid UserRegistrationRequest request) {
         try {
             User newUser = service.registerUser(request);
@@ -52,13 +53,16 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable UUID id) {
-        UserDTO user = service.getUser(id);
-        if (user == null) {
-            return ResponseEntity.noContent().build();
-        }
+        Optional<UserDTO> user = service.getUser(id);
+        if (user.isEmpty()) return ResponseEntity. notFound().build();
         return ResponseEntity.ok(user);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+        service.deleteUser(id);
+        return ResponseEntity.ok().build();
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -4,8 +4,11 @@ import cz.pycrs.learning.entity.user.dto.UserDTO;
 import cz.pycrs.learning.payload.request.UserRegistrationRequest;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -30,7 +33,6 @@ public class User {
             nullable = false
     )
     private String username, email;
-    private String firstName, middleName, lastName;
     @Column(
             nullable = false
     )
@@ -39,7 +41,13 @@ public class User {
             nullable = false
     )
     private String password;
+    @CreationTimestamp
+    private LocalDateTime registeredAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
     private Gender gender;
+    private String firstName, middleName, lastName;
 
     protected User() {
     }

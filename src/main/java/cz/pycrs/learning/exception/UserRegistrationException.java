@@ -1,4 +1,4 @@
-package cz.pycrs.learning;
+package cz.pycrs.learning.exception;
 
 public class UserRegistrationException extends RuntimeException {
     public UserRegistrationException(String message) {
